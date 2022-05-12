@@ -1,6 +1,6 @@
+import type { GetPolicyFilters, IPolicy, OrNull } from "~/types";
 import fs from "fs";
 import path from "path";
-import { GetPolicyFilters, IPolicy, OrNull } from "~/types";
 
 export interface IReadDataArgs {
   filters?: GetPolicyFilters;
@@ -18,15 +18,9 @@ export async function readDataAsync({
   pageSize,
   skip,
 }: IReadDataArgs): Promise<IReadDataResult> {
-  const csv = fs.readFileSync(
-    path.resolve(`./public`, `auto_policies.csv`),
-    `utf-8`
-  );
+  const policies = readCSVFile();
 
-  const policies = csv
-    .split(`\r\n`)
-    .slice(1)
-    .map(csvRowToPolicy)
+  const matchingPoliciesPlus1 = policies
     .filter(matchingValues(`driverEmployment`, filters?.driverEmployment))
     .filter(matchingValues(`driverGender`, filters?.driverGender))
     .filter(matchingValues(`driverLocation`, filters?.driverLocation))
@@ -37,11 +31,12 @@ export async function readDataAsync({
     .filter(matchingValues(`year`, filters?.year))
     .slice(skip, skip + pageSize + 1);
 
-  const matchingPolicies = policies.slice(0, pageSize);
+  const matchingPolicies = matchingPoliciesPlus1.slice(0, pageSize);
 
   return {
     policies: matchingPolicies.length > 0 ? matchingPolicies : null,
-    skip: policies.slice(pageSize).length > 0 ? skip + pageSize : null,
+    skip:
+      matchingPoliciesPlus1.slice(pageSize).length > 0 ? skip + pageSize : null,
   };
 }
 
@@ -54,7 +49,35 @@ function matchingValues<FilterType extends keyof IPolicy>(
   };
 }
 
-function csvRowToPolicy(row: string): IPolicy {
+export interface IReadDatumArgs {
+  row: number;
+}
+
+export interface IReadDatumResult {
+  policy: OrNull<IPolicy>;
+}
+
+export async function readDatumAsync({
+  row,
+}: IReadDatumArgs): Promise<IReadDatumResult> {
+  const policies = readCSVFile();
+
+  const [matchingPolicy] = policies.slice(row + 1, row + 2);
+
+  return {
+    policy: matchingPolicy ?? null,
+  };
+}
+
+function readCSVFile() {
+  return fs
+    .readFileSync(path.resolve(`./public`, `auto_policies.csv`), `utf-8`)
+    .split(`\r\n`)
+    .slice(1)
+    .map(csvRowToPolicy);
+}
+
+function csvRowToPolicy(row: string, rowIndex: number): IPolicy {
   const columns = row.split(`,`);
   const csvColumns = [
     `year`,
@@ -71,8 +94,13 @@ function csvRowToPolicy(row: string): IPolicy {
     `insuranceLosses`,
   ] as unknown as keyof IPolicy;
 
-  return columns.reduce((policy, column, index) => {
-    policy[csvColumns[index]] = column;
-    return policy;
-  }, {} as IPolicy);
+  return columns.reduce(
+    (policy, column, index) => {
+      policy[csvColumns[index]] = column;
+      return policy;
+    },
+    {
+      row: rowIndex + 1,
+    } as IPolicy
+  );
 }

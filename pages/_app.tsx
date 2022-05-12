@@ -1,15 +1,27 @@
+import type { AppProps } from "next/app";
 import Head from "next/head";
-import { AppProps } from "next/app";
-import "../styles/index.css";
+import { ApiCacheClient, ApiCacheDevtools, ApiCacheProvider } from "~/packages";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+const apiCacheClient = new ApiCacheClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    },
+  },
+});
+
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
         <title>Ledger Case Study</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Component {...pageProps} />
+      <ApiCacheProvider client={apiCacheClient}>
+        <ApiCacheDevtools />
+        <Component {...pageProps} />
+      </ApiCacheProvider>
     </>
   );
 }

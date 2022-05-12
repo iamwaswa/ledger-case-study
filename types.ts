@@ -2,18 +2,70 @@ export type OrNull<Type> = Type | null;
 
 export type OrUndefined<Type> = Type | undefined;
 
+export type ResolvedPromise<Type extends Promise<unknown>> =
+  Type extends Promise<infer ResolvedType> ? ResolvedType : never;
+
+export type ApiCacheResponse<Data> = {
+  data: OrUndefined<Data>;
+  error: OrNull<Error>;
+  loading: boolean;
+};
+
+export type ApiMethod = `DELETE` | `GET` | `PATCH` | `POST` | `PUT`;
+
+export type ApiResponseJson<Data = undefined> = {
+  data?: Data;
+  error?: string;
+};
+
+export enum DriverEmployment {
+  EMPLOYED = "EMPLOYED",
+  HOMEMAKER = "HOMEMAKER",
+  OTHER_EMP = "OTHER_EMP",
+  RETIRED = "RETIRED",
+  STUDENT = "STUDENT",
+  UNEMPLOYED = "UNEMPLOYED",
+}
+
+export enum DriverGender {
+  FEMALE = "Female",
+  MALE = "Male",
+}
+
+export enum DriverLocation {
+  RURAL = "Rural",
+  SUBURBAN = "Suburban",
+  URBAN = "Urban",
+}
+
+export enum DriverMaritalStatus {
+  MARRIED = "Married",
+  SINGLE = "Single",
+}
+
+export enum VehicleModel {
+  COUPE_CABRIOLET = "COUPE_CABRIOLET",
+  HATCHBACK = "HATCHBACK",
+  OTHER_MODEL = "OTHER_MODEL",
+  PICKUP = "PICKUP",
+  SEDAN = "SEDAN",
+  SUV = "SUV",
+  VAN = "VAN",
+}
+
 export interface IPolicy {
   driverAge: number;
-  driverGender: string;
-  driverEmployment: string;
-  driverLocation: string;
-  driverMaritalStatus: string;
+  driverGender: DriverGender;
+  driverEmployment: DriverEmployment;
+  driverLocation: DriverLocation;
+  driverMaritalStatus: DriverMaritalStatus;
   insuranceClaims: number;
   insuranceLosses: number;
   insurancePremium: number;
-  month: number;
+  month: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  row: number;
   vehicleAge: number;
-  vehicleModel: string;
+  vehicleModel: VehicleModel;
   year: number;
 }
 
@@ -31,12 +83,12 @@ export enum GetPolicyFilterKey {
 
 export type GetPolicyFilters = Partial<{
   [GetPolicyFilterKey.DRIVER_AGE]: number;
-  [GetPolicyFilterKey.DRIVER_GENDER]: string;
-  [GetPolicyFilterKey.DRIVER_EMPLOYMENT]: string;
-  [GetPolicyFilterKey.DRIVER_LOCATION]: string;
-  [GetPolicyFilterKey.DRIVER_MARITAL_STATUS]: string;
-  [GetPolicyFilterKey.MONTH]: number;
+  [GetPolicyFilterKey.DRIVER_EMPLOYMENT]: DriverEmployment;
+  [GetPolicyFilterKey.DRIVER_GENDER]: DriverGender;
+  [GetPolicyFilterKey.DRIVER_LOCATION]: DriverLocation;
+  [GetPolicyFilterKey.DRIVER_MARITAL_STATUS]: DriverMaritalStatus;
+  [GetPolicyFilterKey.MONTH]: IPolicy[`month`];
   [GetPolicyFilterKey.VEHICLE_AGE]: number;
-  [GetPolicyFilterKey.VEHICLE_MODEL]: string;
+  [GetPolicyFilterKey.VEHICLE_MODEL]: VehicleModel;
   [GetPolicyFilterKey.YEAR]: number;
 }>;

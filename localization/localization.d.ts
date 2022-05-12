@@ -5,6 +5,11 @@ interface ILocalizationStrings {
   apiMethodNotAllowed: string;
 
   /*
+   * The default loading message
+   */
+  defaultLoadingMessage: string;
+
+  /*
    * The error message to show when there is an internal server error
    */
   internalServerErrorMessage: string;

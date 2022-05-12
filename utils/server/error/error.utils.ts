@@ -1,21 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import type { ApiMethod, ApiResponseJson } from "~/types";
 import { strings } from "~/localization";
 
-interface IWithErrorHandlerArgs<ValidRequest extends NextApiRequest> {
+interface IWithErrorHandlerArgs<ValidRequest extends NextApiRequest, Data> {
   req: NextApiRequest;
-  res: NextApiResponse;
-  method: `DELETE` | `GET` | `PATCH` | `POST` | `PUT`;
+  res: NextApiResponse<ApiResponseJson<Data>>;
+  method: ApiMethod;
   isValidRequest: (req: NextApiRequest) => req is ValidRequest;
   callback: (req: ValidRequest) => Promise<void>;
 }
 
-export function withErrorHandling<ValidRequest extends NextApiRequest>({
+export function withErrorHandling<ValidRequest extends NextApiRequest, Data>({
   req,
   res,
   method,
   isValidRequest,
   callback,
-}: IWithErrorHandlerArgs<ValidRequest>) {
+}: IWithErrorHandlerArgs<ValidRequest, Data>) {
   try {
     if (req.method?.toLowerCase() !== method.toLowerCase()) {
       return res.status(405).json({
