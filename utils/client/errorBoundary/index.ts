@@ -1,1 +1,1 @@
-export * from "./ErrorBoundary.utils";
+export * from "./errorBoundary.utils";

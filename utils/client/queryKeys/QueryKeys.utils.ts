@@ -1,4 +1,4 @@
-import { IReadDataArgs, IReadDatumArgs } from "~/utils/server";
+import type { IReadDataArgs, IReadDatumArgs } from "~/types";
 
 /**
  * Manages utilities for generating query keys.

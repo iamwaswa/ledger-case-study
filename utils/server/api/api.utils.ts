@@ -3,8 +3,8 @@ import type {
   IReadDataResult,
   IReadDatumArgs,
   IReadDatumResult,
-} from "~/utils";
-import { readDataAsync, readDatumAsync } from "~/utils";
+} from "~/types";
+import { readDataAsync, readDatumAsync } from "~/utils/server";
 
 export async function getPoliciesAsync(
   args: IReadDataArgs

@@ -1,1 +1,1 @@
-export * from "./QueryKeys.utils";
+export * from "./queryKeys.utils";

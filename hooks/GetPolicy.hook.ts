@@ -1,6 +1,6 @@
 import type { ApiCacheResponse, ResolvedPromise } from "~/types";
-import { useApiCacheQuery } from "~/packages";
-import { queryFunctions, queryKeys } from "~/utils";
+import { useApiCacheQuery } from "~/packages/client";
+import { queryFunctions, queryKeys } from "~/utils/client";
 
 /**
  * Manages fetching the policy at the given row

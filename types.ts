@@ -92,3 +92,22 @@ export type GetPolicyFilters = Partial<{
   [GetPolicyFilterKey.VEHICLE_MODEL]: VehicleModel;
   [GetPolicyFilterKey.YEAR]: number;
 }>;
+
+export interface IReadDataArgs {
+  filters?: GetPolicyFilters;
+  pageSize: number;
+  skip: number;
+}
+
+export interface IReadDataResult {
+  policies: OrNull<Array<IPolicy>>;
+  skip: OrNull<number>;
+}
+
+export interface IReadDatumArgs {
+  row: number;
+}
+
+export interface IReadDatumResult {
+  policy: OrNull<IPolicy>;
+}

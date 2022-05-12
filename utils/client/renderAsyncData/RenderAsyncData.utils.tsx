@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { OrNull, OrUndefined } from "~/types";
 import { strings } from "~/localization";
 import { useDelayedTrueValue } from "~/hooks";
-import { ErrorBoundary } from "~/utils";
+import { ErrorBoundary } from "~/utils/client";
 
 export interface IRenderAsyncDataProps<DataType> {
   data: OrUndefined<DataType>;

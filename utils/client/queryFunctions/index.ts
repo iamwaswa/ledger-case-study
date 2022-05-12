@@ -1,1 +1,1 @@
-export * from "./QueryFunctions.utils";
+export * from "./queryFunctions.utils";

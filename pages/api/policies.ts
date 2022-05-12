@@ -1,17 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {
+import type {
   ApiResponseJson,
+  GetPolicyFilters,
+  IPolicy,
+  IReadDataResult,
+  OrUndefined,
+} from "~/types";
+import {
   DriverEmployment,
   DriverGender,
   DriverLocation,
   DriverMaritalStatus,
-  GetPolicyFilters,
-  IPolicy,
-  OrUndefined,
   VehicleModel,
 } from "~/types";
-import { IReadDataResult, withErrorHandling } from "~/utils";
-import { getPoliciesAsync } from "~/utils";
+import { getPoliciesAsync, withErrorHandling } from "~/utils/server";
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,17 +28,29 @@ export default async function handler(
       return res.status(200).json({
         data: await getPoliciesAsync({
           filters: {
-            driverAge: parseFloat(query.driverAge),
+            driverAge:
+              typeof query.driverAge === `undefined`
+                ? undefined
+                : parseFloat(query.driverAge),
             driverEmployment:
               query.driverEmployment as OrUndefined<DriverEmployment>,
             driverGender: query.driverGender as OrUndefined<DriverGender>,
             driverLocation: query.driverLocation as OrUndefined<DriverLocation>,
             driverMaritalStatus:
               query.driverMaritalStatus as OrUndefined<DriverMaritalStatus>,
-            month: parseInt(query.month) as IPolicy[`month`],
-            vehicleAge: parseInt(query.vehicleAge),
+            month:
+              typeof query.month === `undefined`
+                ? undefined
+                : (parseInt(query.month) as IPolicy[`month`]),
+            vehicleAge:
+              typeof query.vehicleAge === `undefined`
+                ? undefined
+                : parseInt(query.vehicleAge),
             vehicleModel: query.vehicleModel as OrUndefined<VehicleModel>,
-            year: parseInt(query.year),
+            year:
+              typeof query.year === `undefined`
+                ? undefined
+                : parseInt(query.year),
           },
           pageSize: parseInt(query.pageSize),
           skip: parseInt(query.skip),
@@ -58,11 +72,12 @@ function isValidRequest(req: NextApiRequest): req is IGetPoliciesRequest {
 
   return (
     typeof query?.pageSize === `string` &&
-    Number.parseInt(query?.pageSize) >= 0 &&
+    Number.parseInt(query.pageSize) >= 0 &&
     typeof query?.skip === `string` &&
-    Number.parseInt(query?.skip) >= 0 &&
-    [`undefined`, `string`].includes(typeof query?.driverAge) &&
-    Number.parseInt(String(query?.driverAge)) >= 0 &&
+    Number.parseInt(query.skip) >= 0 &&
+    ((typeof query?.driverAge === `string` &&
+      Number.parseInt(String(query.driverAge)) >= 0) ||
+      typeof query?.driverAge === `undefined`) &&
     [`undefined`, ...Object.values(DriverGender)].includes(
       typeof query?.driverGender
     ) &&
@@ -75,15 +90,18 @@ function isValidRequest(req: NextApiRequest): req is IGetPoliciesRequest {
     [`undefined`, ...Object.values(DriverMaritalStatus)].includes(
       typeof query?.driverMaritalStatus
     ) &&
-    [`undefined`, `string`].includes(typeof query?.month) &&
-    Number.parseInt(String(query?.month)) >= 1 &&
-    Number.parseInt(String(query?.month)) <= 12 &&
-    [`undefined`, `string`].includes(typeof query?.vehicleAge) &&
-    Number.parseInt(String(query?.vehicleAge)) >= 0 &&
+    ((typeof query?.month === `string` &&
+      Number.parseInt(String(query.month)) >= 1 &&
+      Number.parseInt(String(query.month)) <= 12) ||
+      typeof query?.month === `undefined`) &&
+    ((typeof query?.vehicleAge === `string` &&
+      Number.parseInt(String(query.vehicleAge)) >= 0) ||
+      typeof query?.vehicleAge === `undefined`) &&
     [`undefined`, ...Object.values(VehicleModel)].includes(
       typeof query?.vehicleModel
     ) &&
-    [`undefined`, `string`].includes(typeof query?.year) &&
-    Number.parseInt(String(query?.year)) >= 0
+    ((typeof query?.year === `string` &&
+      Number.parseInt(String(query.year)) >= 0) ||
+      typeof query?.year === `undefined`)
   );
 }

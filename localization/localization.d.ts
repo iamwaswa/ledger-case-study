@@ -13,4 +13,125 @@ interface ILocalizationStrings {
    * The error message to show when there is an internal server error
    */
   internalServerErrorMessage: string;
+
+  /*
+   * The description for the policies page
+   */
+  policiesPageDescription: string;
+
+  /*
+   * The title for the policies page
+   */
+  policiesPageTitle: string;
+
+  /*
+   * The title for the policies table driver age column
+   */
+  policiesTableDriverAgeColumnTitle: string;
+
+  /*
+   * The title for the policies table driver gender column
+   */
+  policiesTableDriverGenderColumnTitle: string;
+
+  /*
+   * The title for the policies table driver employment column
+   */
+  policiesTableDriverEmploymentColumnTitle: string;
+
+  /*
+   * The title for the policies table driver location column
+   */
+  policiesTableDriverLocationColumnTitle: string;
+
+  /*
+   * The title for the policies table driver marital status column
+   */
+  policiesTableDriverMaritalStatusColumnTitle: string;
+
+  /*
+   * The title for the policies table insurance claims column
+   */
+  policiesTableInsuranceClaimsColumnTitle: string;
+
+  /*
+   * The title for the policies table inssurance losses column
+   */
+  policiesTableInsuranceLossesColumnTitle: string;
+
+  /*
+   * The title for the policies table inssurance premiums column
+   */
+  policiesTableInsurancePremiumColumnTitle: string;
+
+  /*
+   * The message for the policies table loading state
+   */
+  policiesTableLoadingMessage: string;
+
+  /*
+   * The title for the policies table month column
+   */
+  policiesTableMonthColumnTitle: string;
+
+  /*
+   * The text for the policies table next action
+   */
+  policiesTableNextActionText: string;
+
+  /*
+   * The text for the policies table page size label
+   */
+  policiesTablePageSizeLabelText: string;
+
+  /*
+   * The text for the policies table previous action
+   */
+  policiesTablePreviousActionText: string;
+
+  /*
+   * The title for the policies table row column
+   */
+  policiesTableRowColumnTitle: string;
+
+  /*
+   * The title for the policies table vehicle age column
+   */
+  policiesTableVehicleAgeColumnTitle: string;
+
+  /*
+   * The title for the policies table vehicle model column
+   */
+  policiesTableVehicleModelColumnTitle: string;
+
+  /*
+   * The title for the policies table year column
+   */
+  policiesTableYearColumnTitle: string;
+
+  /*
+   * The message for the policy loading state
+   */
+  policyLoadingMessage: string;
+
+  /*
+   * The description for the policy page
+   */
+  policyPageDescription: string;
+
+  /*
+   * The error message for the policy page when there is an invalid row number
+   */
+  policyPageInvalidRowErrorMessage: string;
+
+  /*
+   * The message for the policy page loading state
+   */
+  policyPageLoadingMessage: string;
+
+  /*
+   * The title for the policy page,
+   * Replace {0} with the number of the policy
+   */
+  policyPageTitle: string;
 }

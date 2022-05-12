@@ -1,6 +1,6 @@
 import { ApiCacheResponse, GetPolicyFilters, ResolvedPromise } from "~/types";
-import { useApiCacheInfiniteQuery } from "~/packages";
-import { queryFunctions, queryKeys } from "~/utils";
+import { useApiCacheInfiniteQuery } from "~/packages/client";
+import { queryFunctions, queryKeys } from "~/utils/client";
 import { useEffect, useRef } from "react";
 
 interface IUseGetPoliciesResponse
@@ -9,8 +9,8 @@ interface IUseGetPoliciesResponse
   > {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  onFetchNextPage(): void;
-  onFetchPreviousPage(): void;
+  handleFetchNextPage(): void;
+  handleFetchPreviousPage(): void;
 }
 
 /**
@@ -62,16 +62,16 @@ export function useGetPolicies(
   );
 
   return {
-    data: data.pages[0],
+    data: data?.pages[0] ?? undefined,
     error,
     hasNextPage,
     hasPreviousPage,
     loading,
-    onFetchNextPage() {
+    handleFetchNextPage() {
       page.current++;
       fetchNextPage();
     },
-    onFetchPreviousPage() {
+    handleFetchPreviousPage() {
       page.current--;
       fetchPreviousPage();
     },

@@ -1,1 +1,1 @@
-export * from "./RenderAsyncData.utils";
+export * from "./renderAsyncData.utils";

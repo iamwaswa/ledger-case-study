@@ -18,12 +18,11 @@ export function withErrorHandling<ValidRequest extends NextApiRequest, Data>({
   callback,
 }: IWithErrorHandlerArgs<ValidRequest, Data>) {
   try {
-    if (req.method?.toLowerCase() !== method.toLowerCase()) {
+    if (req.method?.toUpperCase() !== method) {
       return res.status(405).json({
         error: strings.apiMethodNotAllowed,
       });
     }
-
     if (isValidRequest(req)) {
       return callback(req);
     } else {
