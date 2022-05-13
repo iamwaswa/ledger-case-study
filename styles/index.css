@@ -4,3 +4,13 @@
 /* Your own custom component styles */
 
 @import "tailwindcss/utilities";
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+#__next > main {
+  flex-grow: 1;
+}

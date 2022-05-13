@@ -5,6 +5,7 @@ import {
   ApiCacheDevtools,
   ApiCacheProvider,
 } from "~/packages/client";
+import "~/styles/index.css";
 
 const apiCacheClient = new ApiCacheClient({
   defaultOptions: {

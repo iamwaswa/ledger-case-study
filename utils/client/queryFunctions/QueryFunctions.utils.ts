@@ -8,8 +8,7 @@ import { asyncRequest, queryKeys } from "~/utils/client";
  */
 export const queryFunctions = {
   getPolicies({
-    queryKey: [{ endpoint, filters, pageSize }],
-    pageParam: skip,
+    queryKey: [{ endpoint, filters, pageSize, skip }],
   }: QueryFunctionContext<
     ReturnType<typeof queryKeys.getPolicies> & {
       pageParam: OrNull<number>;
@@ -54,7 +53,7 @@ export const queryFunctions = {
 
     urlSearchParams.set(`pageSize`, String(pageSize));
 
-    urlSearchParams.set(`skip`, String(skip ?? 0));
+    urlSearchParams.set(`skip`, String(skip));
 
     return asyncRequest<IReadDataResult>({
       endpoint,

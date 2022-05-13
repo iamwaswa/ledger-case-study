@@ -10,9 +10,54 @@ interface ILocalizationStrings {
   defaultLoadingMessage: string;
 
   /*
+   * The emoty label for a select option
+   */
+  emptySelectOptionLabel: string;
+
+  /*
    * The error message to show when there is an internal server error
    */
   internalServerErrorMessage: string;
+
+  /*
+   * The message shown when no policies are found
+   */
+  noPoliciesFoundMessage: string;
+
+  /*
+   * The label for the policies filters driver employment entry
+   */
+  policiesFiltersDriverEmploymentLabel: string;
+
+  /*
+   * The label for the policies filters driver gender entry
+   */
+  policiesFiltersDriverGenderLabel: string;
+
+  /*
+   * The label for the policies filters driver location entry
+   */
+  policiesFiltersDriverLocationLabel: string;
+
+  /*
+   * The label for the policies filters driver marital status entry
+   */
+  policiesFiltersDriverMaritalStatusLabel: string;
+
+  /*
+   * The label for the policies filters month entry
+   */
+  policiesFiltersMonthLabel: string;
+
+  /*
+   * The label for the policies filters vehicle model entry
+   */
+  policiesFiltersVehicleModelLabel: string;
+
+  /*
+   * The label for the policies filters year entry
+   */
+  policiesFiltersYearLabel: string;
 
   /*
    * The description for the policies page
@@ -23,6 +68,11 @@ interface ILocalizationStrings {
    * The title for the policies page
    */
   policiesPageTitle: string;
+
+  /*
+   * The loading text for the policies action
+   */
+  policiesTableActionLoadingText: string;
 
   /*
    * The title for the policies table driver age column
@@ -70,6 +120,11 @@ interface ILocalizationStrings {
   policiesTableLoadingMessage: string;
 
   /*
+   * The message for the policies table
+   */
+  policiesTableMessage: string;
+
+  /*
    * The title for the policies table month column
    */
   policiesTableMonthColumnTitle: string;
@@ -88,11 +143,6 @@ interface ILocalizationStrings {
    * The text for the policies table previous action
    */
   policiesTablePreviousActionText: string;
-
-  /*
-   * The title for the policies table row column
-   */
-  policiesTableRowColumnTitle: string;
 
   /*
    * The title for the policies table vehicle age column

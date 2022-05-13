@@ -70,28 +70,27 @@ export interface IPolicy {
 }
 
 export enum GetPolicyFilterKey {
-  DRIVER_AGE = "driverAge",
   DRIVER_EMPLOYMENT = "driverEmployment",
   DRIVER_GENDER = "driverGender",
   DRIVER_LOCATION = "driverLocation",
   DRIVER_MARITAL_STATUS = "driverMaritalStatus",
   MONTH = "month",
-  VEHICLE_AGE = "vehicleAge",
   VEHICLE_MODEL = "vehicleModel",
   YEAR = "year",
 }
 
-export type GetPolicyFilters = Partial<{
-  [GetPolicyFilterKey.DRIVER_AGE]: number;
-  [GetPolicyFilterKey.DRIVER_EMPLOYMENT]: DriverEmployment;
-  [GetPolicyFilterKey.DRIVER_GENDER]: DriverGender;
-  [GetPolicyFilterKey.DRIVER_LOCATION]: DriverLocation;
-  [GetPolicyFilterKey.DRIVER_MARITAL_STATUS]: DriverMaritalStatus;
-  [GetPolicyFilterKey.MONTH]: IPolicy[`month`];
-  [GetPolicyFilterKey.VEHICLE_AGE]: number;
-  [GetPolicyFilterKey.VEHICLE_MODEL]: VehicleModel;
-  [GetPolicyFilterKey.YEAR]: number;
-}>;
+export type GetPolicyFilters = Partial<
+  Record<
+    | GetPolicyFilterKey.DRIVER_EMPLOYMENT
+    | GetPolicyFilterKey.DRIVER_GENDER
+    | GetPolicyFilterKey.DRIVER_LOCATION
+    | GetPolicyFilterKey.DRIVER_MARITAL_STATUS
+    | GetPolicyFilterKey.MONTH
+    | GetPolicyFilterKey.VEHICLE_MODEL
+    | GetPolicyFilterKey.YEAR,
+    OrUndefined<string>
+  >
+>;
 
 export interface IReadDataArgs {
   filters?: GetPolicyFilters;
@@ -101,7 +100,8 @@ export interface IReadDataArgs {
 
 export interface IReadDataResult {
   policies: OrNull<Array<IPolicy>>;
-  skip: OrNull<number>;
+  skipBack: OrNull<number>;
+  skipForward: OrNull<number>;
 }
 
 export interface IReadDatumArgs {
@@ -111,3 +111,7 @@ export interface IReadDatumArgs {
 export interface IReadDatumResult {
   policy: OrNull<IPolicy>;
 }
+
+export const latestYear = new Date().getFullYear();
+
+export const earliestYear = latestYear - 100;

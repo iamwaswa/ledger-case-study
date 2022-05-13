@@ -1,12 +1,17 @@
-import { ApiCacheResponse, GetPolicyFilters, ResolvedPromise } from "~/types";
-import { useApiCacheInfiniteQuery } from "~/packages/client";
+import type {
+  ApiCacheResponse,
+  GetPolicyFilters,
+  ResolvedPromise,
+} from "~/types";
+import { useApiCacheQuery } from "~/packages/client";
 import { queryFunctions, queryKeys } from "~/utils/client";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 interface IUseGetPoliciesResponse
   extends ApiCacheResponse<
     ResolvedPromise<ReturnType<typeof queryFunctions.getPolicies>>
   > {
+  gettingNextPage: boolean;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   handleFetchNextPage(): void;
@@ -23,24 +28,21 @@ export function useGetPolicies(
   filters: GetPolicyFilters,
   pageSize: number
 ): IUseGetPoliciesResponse {
-  const page = useRef<number>(0);
+  const [skip, setSkip] = useState<number>(0);
 
   // Whenever the filters or page size change
   // then we are starting a fresh query
-  // therefore we reset the page number to its initial value
+  // therefore we reset the skip value to its initial value
   useEffect((): void => {
-    page.current = 0;
+    setSkip(0);
   }, [filters, pageSize]);
 
   const {
     data,
     error,
-    hasNextPage,
-    hasPreviousPage,
+    isFetching,
     isLoading: loading,
-    fetchNextPage,
-    fetchPreviousPage,
-  } = useApiCacheInfiniteQuery<
+  } = useApiCacheQuery<
     ResolvedPromise<ReturnType<typeof queryFunctions.getPolicies>>,
     Error,
     ResolvedPromise<ReturnType<typeof queryFunctions.getPolicies>>,
@@ -49,31 +51,30 @@ export function useGetPolicies(
     queryKeys.getPolicies({
       filters,
       pageSize,
+      skip,
     }),
     queryFunctions.getPolicies,
     {
-      getNextPageParam(lastPage) {
-        return lastPage.skip;
-      },
-      getPreviousPageParam(firstPage) {
-        return firstPage.skip;
-      },
+      keepPreviousData: true,
     }
   );
 
   return {
-    data: data?.pages[0] ?? undefined,
+    data,
     error,
-    hasNextPage,
-    hasPreviousPage,
+    gettingNextPage: isFetching,
+    hasNextPage: data?.skipForward !== null,
+    hasPreviousPage: data?.skipBack !== null,
     loading,
     handleFetchNextPage() {
-      page.current++;
-      fetchNextPage();
+      if (data?.skipForward !== null) {
+        setSkip(data.skipForward);
+      }
     },
     handleFetchPreviousPage() {
-      page.current--;
-      fetchPreviousPage();
+      if (data?.skipBack !== null) {
+        setSkip(data.skipBack);
+      }
     },
   };
 }

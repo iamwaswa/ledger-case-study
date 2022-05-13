@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useGetPolicies, usePageSize, usePoliciesFilters } from "~/hooks";
 import { strings } from "~/localization";
-import { RenderAsyncData } from "~/utils/client";
-import { PoliciesTableFilters } from "./policiesTableFilters";
-import { PoliciesTablePagination } from "./policiesTablePagination";
+import { RenderAsyncData, RenderEitherOr } from "~/utils/client";
+import { PoliciesFilters } from "./policiesFilters";
+import { PoliciesPagination } from "./policiesPagination";
 import { PoliciesTable } from "./policiesTable";
 
 export function PoliciesPage() {
@@ -14,6 +14,7 @@ export function PoliciesPage() {
   const {
     data,
     error,
+    gettingNextPage,
     hasNextPage,
     hasPreviousPage,
     loading,
@@ -26,8 +27,8 @@ export function PoliciesPage() {
       <Head>
         <meta content={strings.policiesPageDescription} name="description" />
       </Head>
-      <main>
-        <h1 className="font-mono text-xl code">{strings.policiesPageTitle}</h1>
+      <main className="bg-slate-50 p-4">
+        <h1 className="text-xl">{strings.policiesPageTitle}</h1>
         <RenderAsyncData
           data={data}
           error={error}
@@ -35,28 +36,40 @@ export function PoliciesPage() {
           renderData={({ policies }) => {
             return (
               <section className="flex flex-col gap-2 items-stretch">
-                <PoliciesTableFilters
+                <PoliciesFilters
                   filters={filters}
                   updateFilters={updateFilters}
                 />
-                <PoliciesTablePagination
-                  hasNextPage={hasNextPage}
-                  hasPreviousPage={hasPreviousPage}
-                  pageSize={pageSize}
-                  pageSizeOptions={pageSizeOptions}
-                  fetchNextPage={handleFetchNextPage}
-                  fetchPreviousPage={handleFetchPreviousPage}
-                  setPageSize={setPageSize}
-                />
-                <PoliciesTable policies={policies} />
-                <PoliciesTablePagination
-                  hasNextPage={hasNextPage}
-                  hasPreviousPage={hasPreviousPage}
-                  pageSize={pageSize}
-                  pageSizeOptions={pageSizeOptions}
-                  fetchNextPage={handleFetchNextPage}
-                  fetchPreviousPage={handleFetchPreviousPage}
-                  setPageSize={setPageSize}
+                <RenderEitherOr
+                  ifTrue={policies}
+                  thenRender={(policiesData) => {
+                    return (
+                      <>
+                        <PoliciesPagination
+                          hasNextPage={hasNextPage}
+                          hasPreviousPage={hasPreviousPage}
+                          loading={gettingNextPage}
+                          pageSize={pageSize}
+                          pageSizeOptions={pageSizeOptions}
+                          fetchNextPage={handleFetchNextPage}
+                          fetchPreviousPage={handleFetchPreviousPage}
+                          setPageSize={setPageSize}
+                        />
+                        <PoliciesTable policies={policiesData} />
+                        <PoliciesPagination
+                          hasNextPage={hasNextPage}
+                          hasPreviousPage={hasPreviousPage}
+                          loading={gettingNextPage}
+                          pageSize={pageSize}
+                          pageSizeOptions={pageSizeOptions}
+                          fetchNextPage={handleFetchNextPage}
+                          fetchPreviousPage={handleFetchPreviousPage}
+                          setPageSize={setPageSize}
+                        />
+                      </>
+                    );
+                  }}
+                  otherwiseRender={<p>{strings.noPoliciesFoundMessage}</p>}
                 />
               </section>
             );

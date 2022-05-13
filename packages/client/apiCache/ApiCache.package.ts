@@ -1,4 +1,5 @@
 export type {
+  InfiniteData as ApiCacheInfiniteData,
   QueryFunctionContext,
   QueryObserverResult as ApiCacheObserverResult,
   RefetchOptions,

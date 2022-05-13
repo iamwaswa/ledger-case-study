@@ -5,7 +5,7 @@ import type { IReadDataArgs, IReadDatumArgs } from "~/types";
  * @returns The query key generator utitlies
  */
 export const queryKeys = {
-  getPolicies(dependencies: Omit<IReadDataArgs, `skip`>) {
+  getPolicies(dependencies: IReadDataArgs) {
     return [{ endpoint: `/policies`, ...dependencies }] as const;
   },
   getPolicy(dependencies: IReadDatumArgs) {

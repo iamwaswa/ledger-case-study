@@ -1,12 +1,13 @@
+import type {
+  GetPolicyFilterKey,
+  GetPolicyFilters,
+  OrUndefined,
+} from "~/types";
 import { useState } from "react";
-import { GetPolicyFilters } from "~/types";
 
 interface IUsePoliciesFilters {
   filters: GetPolicyFilters;
-  updateFilters(
-    key: keyof GetPolicyFilters,
-    value: GetPolicyFilters[keyof GetPolicyFilters]
-  ): void;
+  updateFilters(key: GetPolicyFilterKey, value: OrUndefined<string>): void;
 }
 
 export function usePoliciesFilters(): IUsePoliciesFilters {
@@ -14,10 +15,7 @@ export function usePoliciesFilters(): IUsePoliciesFilters {
 
   return {
     filters,
-    updateFilters(
-      key: keyof GetPolicyFilters,
-      value: GetPolicyFilters[keyof GetPolicyFilters]
-    ) {
+    updateFilters(key: GetPolicyFilterKey, value: OrUndefined<string>) {
       setFilters((currentFilters) => ({
         ...currentFilters,
         [key]: value,
