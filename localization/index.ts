@@ -7,6 +7,7 @@ export const strings = new LocalizedStrings<ILocalizationStrings>({
     emptySelectOptionLabel: `-`,
     internalServerErrorMessage: `Looks like something went wrong on our end, we are working hard to fix it! Check back in a few minutes, if the issue persists let an adminstrator know.`,
     noPoliciesFoundMessage: `No policies found`,
+    policiesCardsMessage: `Click a card to view more on the policy!`,
     policiesPageDescription: `List of policies`,
     policiesFiltersDriverEmploymentLabel: `Driver employment`,
     policiesFiltersDriverGenderLabel: `Driver gender`,

@@ -25,6 +25,11 @@ interface ILocalizationStrings {
   noPoliciesFoundMessage: string;
 
   /*
+   * The message for the policies cards
+   */
+  policiesCardsMessage: string;
+
+  /*
    * The label for the policies filters driver employment entry
    */
   policiesFiltersDriverEmploymentLabel: string;

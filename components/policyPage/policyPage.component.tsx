@@ -25,6 +25,14 @@ export function PolicyPage() {
               thenRender={(policyRow) => {
                 return (
                   <>
+                    <Head>
+                      <title>
+                        {strings.formatString(
+                          strings.policyPageTitle,
+                          policyRow
+                        )}
+                      </title>
+                    </Head>
                     <h1 className="text-xl">
                       {strings.formatString(strings.policyPageTitle, policyRow)}
                     </h1>

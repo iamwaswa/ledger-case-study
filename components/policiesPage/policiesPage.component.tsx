@@ -26,6 +26,7 @@ export function PoliciesPage() {
     <>
       <Head>
         <meta content={strings.policiesPageDescription} name="description" />
+        <title>{strings.policiesPageTitle}</title>
       </Head>
       <section className="flex flex-col grow">
         <h1 className="text-xl">{strings.policiesPageTitle}</h1>
