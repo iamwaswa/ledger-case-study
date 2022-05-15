@@ -4,7 +4,7 @@ import path from "path";
 
 export function readCSVFile() {
   return fs
-    .readFileSync(path.resolve(`./public`, `auto_policies.csv`), `utf-8`)
+    .readFileSync(path.resolve(`.`, `auto_policies.csv`), `utf-8`)
     .split(`\n`)
     .filter(Boolean)
     .slice(1)
