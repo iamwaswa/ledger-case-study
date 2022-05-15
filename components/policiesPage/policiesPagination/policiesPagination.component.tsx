@@ -30,7 +30,7 @@ export function PoliciesPagination({
   }
 
   return (
-    <section className="flex items-center justify-between py-2">
+    <section className="flex flex-wrap gap-2 items-center justify-between py-2">
       <button
         className={buttonClassName}
         disabled={loading || !hasPreviousPage}

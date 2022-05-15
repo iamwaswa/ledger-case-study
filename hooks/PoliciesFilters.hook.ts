@@ -10,6 +10,10 @@ interface IUsePoliciesFilters {
   updateFilters(key: GetPolicyFilterKey, value: OrUndefined<string>): void;
 }
 
+/**
+ * Manages the state of the policies filters.
+ * @returns The policies filters state
+ */
 export function usePoliciesFilters(): IUsePoliciesFilters {
   const [filters, setFilters] = useState<GetPolicyFilters>({});
 

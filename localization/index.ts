@@ -26,7 +26,7 @@ export const strings = new LocalizedStrings<ILocalizationStrings>({
     policiesTableInsuranceLossesColumnTitle: `Insurance losses`,
     policiesTableInsurancePremiumColumnTitle: `Insurance premium`,
     policiesTableLoadingMessage: `Getting policies...`,
-    policiesTableMessage: `Click a row item to view it fully!`,
+    policiesTableMessage: `Click a row item to view more on it!`,
     policiesTableMonthColumnTitle: `Month`,
     policiesTableNextActionText: `Next >`,
     policiesTablePageSizeLabelText: `Maximum number of items per page:`,

@@ -1,4 +1,4 @@
-import type { IReadDataResult, IReadDatumResult, OrNull } from "~/types";
+import type { IGetPoliciesResult, IGetPolicyResult, OrNull } from "~/types";
 import { QueryFunctionContext } from "~/packages/client";
 import { asyncRequest, queryKeys } from "~/utils/client";
 
@@ -39,10 +39,6 @@ export const queryFunctions = {
       urlSearchParams.set(`month`, String(filters.month));
     }
 
-    if (filters.vehicleAge) {
-      urlSearchParams.set(`vehicleAge`, String(filters.vehicleAge));
-    }
-
     if (filters.vehicleModel) {
       urlSearchParams.set(`vehicleModel`, String(filters.vehicleModel));
     }
@@ -55,7 +51,7 @@ export const queryFunctions = {
 
     urlSearchParams.set(`skip`, String(skip));
 
-    return asyncRequest<IReadDataResult>({
+    return asyncRequest<IGetPoliciesResult>({
       endpoint,
       method: `GET`,
       query: `?${urlSearchParams.toString()}`,
@@ -64,7 +60,7 @@ export const queryFunctions = {
   getPolicy({
     queryKey: [{ endpoint, row }],
   }: QueryFunctionContext<ReturnType<typeof queryKeys.getPolicy>>) {
-    return asyncRequest<IReadDatumResult>({
+    return asyncRequest<IGetPolicyResult>({
       endpoint: endpoint.replace(`[policyRow]`, String(row)),
       method: `GET`,
     });

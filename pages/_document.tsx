@@ -5,7 +5,9 @@ export default function Document() {
     <Html className="h-full w-full flex flex-col">
       <Head />
       <body className="flex flex-col grow">
-        <Main />
+        <main className="bg-slate-50 flex flex-col grow p-4">
+          <Main />
+        </main>
         <NextScript />
       </body>
     </Html>

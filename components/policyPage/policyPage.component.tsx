@@ -12,7 +12,7 @@ export function PolicyPage() {
       <Head>
         <meta content={strings.policyPageDescription} name="description" />
       </Head>
-      <main className="bg-slate-50">
+      <section className="flex flex-col grow">
         <RenderEitherOr
           ifTrue={isReady}
           thenRender={
@@ -41,7 +41,7 @@ export function PolicyPage() {
           }
           otherwiseRender={<h1>{strings.policyPageLoadingMessage}</h1>}
         />
-      </main>
+      </section>
     </>
   );
 }

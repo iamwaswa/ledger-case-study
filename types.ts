@@ -69,6 +69,15 @@ export interface IPolicy {
   year: number;
 }
 
+export type BasicPolicy = Omit<
+  IPolicy,
+  | `driverAge`
+  | `insuranceClaims`
+  | `insuranceLosses`
+  | `insurancePremium`
+  | `vehicleAge`
+>;
+
 export enum GetPolicyFilterKey {
   DRIVER_EMPLOYMENT = "driverEmployment",
   DRIVER_GENDER = "driverGender",
@@ -92,23 +101,23 @@ export type GetPolicyFilters = Partial<
   >
 >;
 
-export interface IReadDataArgs {
+export interface IGetPoliciesArgs {
   filters?: GetPolicyFilters;
   pageSize: number;
   skip: number;
 }
 
-export interface IReadDataResult {
-  policies: OrNull<Array<IPolicy>>;
+export interface IGetPoliciesResult {
+  policies: OrNull<Array<BasicPolicy>>;
   skipBack: OrNull<number>;
   skipForward: OrNull<number>;
 }
 
-export interface IReadDatumArgs {
+export interface IGetPolicyArgs {
   row: number;
 }
 
-export interface IReadDatumResult {
+export interface IGetPolicyResult {
   policy: OrNull<IPolicy>;
 }
 

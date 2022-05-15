@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type {
   ApiResponseJson,
   GetPolicyFilterKey,
-  IReadDataResult,
+  IGetPoliciesResult,
 } from "~/types";
 import {
   DriverEmployment,
@@ -17,9 +17,9 @@ import { getPoliciesAsync, withErrorHandling } from "~/utils/server";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponseJson<IReadDataResult>>
+  res: NextApiResponse<ApiResponseJson<IGetPoliciesResult>>
 ) {
-  return withErrorHandling<IGetPoliciesRequest, IReadDataResult>({
+  return withErrorHandling<IGetPoliciesRequest, IGetPoliciesResult>({
     method: `GET`,
     req,
     res,

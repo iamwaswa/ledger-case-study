@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ApiResponseJson, IReadDatumResult } from "~/types";
+import type { ApiResponseJson, IGetPolicyResult } from "~/types";
 import { getPolicyAsync, withErrorHandling } from "~/utils/server";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponseJson<IReadDatumResult>>
+  res: NextApiResponse<ApiResponseJson<IGetPolicyResult>>
 ) {
-  return withErrorHandling<IGetPolicyRequest, IReadDatumResult>({
+  return withErrorHandling<IGetPolicyRequest, IGetPolicyResult>({
     method: `GET`,
     req,
     res,
